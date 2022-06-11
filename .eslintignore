@@ -1,0 +1,6 @@
+# .eslintignore
+
+# Distribution.
+/esm/
+/types/
+/dist/

@@ -1,0 +1,15 @@
+{
+  "include": ["test/**/*"],
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "es2017",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowJs": true,
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}

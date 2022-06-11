@@ -1,2 +1,3 @@
-# ts-math
-Mathematics for TypeScript
+# RecMath mathematics module.
+
+> Mathematics for the browser (and TypeScript/Javascript).

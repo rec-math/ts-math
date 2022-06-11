@@ -1,0 +1,9 @@
+# .gitignore
+
+/node_modules/
+/package-lock.json
+
+# Distribution.
+/esm/
+/types/
+/dist/
