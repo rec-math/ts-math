@@ -15,28 +15,48 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.runs-on }}
-
     strategy:
       matrix:
-        runs-on:
-          # - ubuntu-latest
-          # Intermittent failure when macos enabled ?!
-          - macos-latest
-          # - windows-latest
-
-        node-version:
+        include:
           # See https://nodejs.org/en/about/releases/.
-          - 14.x # Until 2023-04-30
-          - 16.x # Until 2024-04-30
-          # Seems to be a problem with mocha or ts-node with Node v18.
-          - 18.x # Until 2025-04-30
+
+          # Run all current/lts node versions on ubuntu.
+          - runs-on: ubuntu-latest
+            node-version: 14.x # Until EOL 2023-04-30
+
+          - runs-on: ubuntu-latest
+            node-version: 16.x # Until EOL 2024-04-30
+
+          - runs-on: ubuntu-latest
+            node-version: 18.x # Until EOL 2025-04-30
+
+          # Just run LTS node versions on Windows and MacOS
+          - runs-on: windows-latest
+            node-version: 16.x # Until Maint 2022-10-18
+
+          - runs-on: macos-latest
+            node-version: 16.x # Until Maint 2022-10-18
+
+    runs-on: ${{ matrix.runs-on }}
 
     steps:
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+
       - uses: actions/checkout@v2
+
       - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.runs-on }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - run: npm install
+
       - run: npm run ci:test
