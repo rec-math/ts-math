@@ -37,11 +37,13 @@ const OmegaL = 0.691; // OmegaL control
 const Omega = 1; // Omega control
 const z_eq = 3370; // z_eq control
 
-const zvals0 = [
+/*
+const zvals = [
   // The z values copied from Lightcone7's table for cross-checking.
   1089.999, 339.0316542, 104.9771906, 32.02928913, 9.293570928, 2.207515378, 0,
   -0.6893293728, -0.8690917659, -0.9451725312, -0.9773721629, -0.991,
 ];
+*/
 
 const zvals = [
   // Positive.
@@ -71,7 +73,7 @@ const zvals = [
 
 // Constants derived from inputs
 H0 *= Hconv; // # H0 in Gyr^-1
-const rhocritNow = rhoConst * (H0 / secInGy) ** 2; //     # Critical density now
+// const rhocritNow = rhoConst * (H0 / secInGy) ** 2; //     # Critical density now
 const s_eq = 1 + z_eq; //   # Stretch when OmegaM=OmegaR
 const OmegaM = ((Omega - OmegaL) * s_eq) / (s_eq + 1); // # Energy density of matter
 const OmegaR = OmegaM / s_eq; // # Energy density of radiation
