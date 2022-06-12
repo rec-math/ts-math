@@ -38,7 +38,7 @@ export type IntegrationStep = (
 export const integrate = (
   f: IntegrandCallback,
   range: QuadratureRange,
-  options: QuadratureOptions,
+  options: QuadratureOptions = {},
 ): [r: number, i: QuadratureInfo] => {
   return quadrature(integrationStep, f, range, options);
 };
