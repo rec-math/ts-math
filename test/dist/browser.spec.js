@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 
 import { expect } from 'chai';
 
-import pkg from '../../package.json';
+const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 
 const iife = readFileSync(pkg.browser, 'utf8');
 const RecMath = eval(`(() => { ${iife}; return RecMath })()`);
