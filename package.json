@@ -1,0 +1,54 @@
+{
+  "name": "@rec-math/math",
+  "version": "1.0.0",
+  "description": "Mathematics for TypeScript",
+  "main": "esm/index.js",
+  "browser": "dist/rec-math.min.js",
+  "module": "esm",
+  "type": "module",
+  "sideEffects": false,
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "esm",
+    "src",
+    "types"
+  ],
+  "scripts": {
+    "build": "rimraf dist esm types && npm run lint && npm run build:esm && rollup -c && npm run test:dist",
+    "build:esm": "tsc --project tsconfig.types.json && tsc --project tsconfig.build.json",
+    "ci:test": "npm run lint && npm run test:unit && npm run build",
+    "lint": "eslint . && prettier . --check",
+    "lint:fix": "eslint . --fix && prettier . --write",
+    "test": "npm run lint:fix && npm run test:unit && npm run test:func",
+    "test:dist": " mocha test/dist/**/*.{spec,test}.{{c,m,}js,ts,tsx}",
+    "test:func": " mocha test/func/**/*.{spec,test}.{js,ts,tsx}",
+    "test:unit": " mocha test/unit/**/*.{spec,test}.{js,ts,tsx}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rec-math/ts-math.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rec-math/ts-math/issues"
+  },
+  "homepage": "https://github.com/rec-math/ts-math#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
+    "chai": "^4.3.6",
+    "eslint": "^8.17.0",
+    "eslint-plugin-mocha": "^10.0.5",
+    "mocha": "^10.0.0",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  }
+}

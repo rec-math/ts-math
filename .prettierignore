@@ -1,0 +1,6 @@
+# .prettierignore
+
+# Distribution.
+/esm/
+/types/
+/dist/
