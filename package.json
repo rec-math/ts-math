@@ -1,7 +1,7 @@
 {
   "name": "@rec-math/math",
   "version": "1.0.0",
-  "description": "Mathematics for TypeScript",
+  "description": "Mathematics for the browser (and TypeScript, JavaScript).",
   "main": "esm/index.js",
   "browser": "dist/rec-math.min.js",
   "module": "esm",
@@ -11,7 +11,6 @@
   "files": [
     "dist",
     "esm",
-    "src",
     "types"
   ],
   "scripts": {
@@ -29,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/rec-math/ts-math.git"
   },
-  "author": "",
+  "author": "pbuk (https://github.com/pb-uk)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rec-math/ts-math/issues"
