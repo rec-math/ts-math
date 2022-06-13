@@ -7,7 +7,7 @@
 Load `RecMath` from a CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@rec-math/math@1"><script>
+<script src="https://cdn.jsdelivr.net/npm/@rec-math/math@1"></script>
 ```
 
 ## Getting started - Node.js
@@ -20,7 +20,7 @@ import * as RecMath from '@rec-math/math';
 
 ## Usage
 
-## Numerical integration (quadrature)
+### Numerical integration (quadrature)
 
 ```Javascript
 const [result, info] = RecMath.integrate.quad(
