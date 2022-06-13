@@ -1,7 +1,9 @@
 # Changelog
 
-## 1.0.0 _(2022-06-12)_
+## 1.1.0 - 2022-06-13
 
 ### Added
 
-- `quadrature.integrate` - numerical integration.
+- `integrate.quad` - numerical integration (quadrature).
+
+## 1.0.0 - 2022-06-12 [YANKED]

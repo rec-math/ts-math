@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 
-import { quadrature } from '../../../src/quadrature/adaptive-quadrature';
-import { integrationStep as g7k15 } from '../../../src/quadrature/gauss-kronrod-g7k15';
-
-import type { QuadratureRange } from '../../../src/quadrature/integrate';
+import { quadrature } from '../../../src/integrate/quad/adaptive-quadrature';
+import { integrationStep as g7k15 } from '../../../src/integrate/quad/gauss-kronrod-g7k15';
 
 // const machineEps = Number.EPSILON;
 const infty = Number.POSITIVE_INFINITY;
@@ -20,9 +18,8 @@ const normalDistribution = (t: number) => Math.exp(-0.5 * t * t) / sqrt2Pi;
 describe('Gauss-Kronrod [G7, K15]', function () {
   it('e^t [0, 1] (1 step, exact)', function () {
     const f = (t: number) => Math.exp(t);
-    const range: QuadratureRange = [0, 1];
 
-    const [result, info] = quadrature(g7k15, f, range);
+    const [result, info] = quadrature(g7k15, f, 0, 1);
 
     expect(result).to.equal(1.7182818284590453);
     expect(info.steps).to.equal(1);
@@ -31,9 +28,8 @@ describe('Gauss-Kronrod [G7, K15]', function () {
   describe('Improper integrals', function () {
     it(`normal distribution ${char.pm}${char.infty} (32 steps, exact)`, function () {
       const f = normalDistribution;
-      const range: QuadratureRange = [minusInfty, infty];
 
-      const [result, info] = quadrature(g7k15, f, range);
+      const [result, info] = quadrature(g7k15, f, minusInfty, infty);
 
       expect(result).to.equal(1);
       expect(info.steps).to.equal(32);
@@ -41,9 +37,8 @@ describe('Gauss-Kronrod [G7, K15]', function () {
 
     it(`normal distribution (-${char.infty}, 0] (16 steps, exact)`, function () {
       const f = normalDistribution;
-      const range: QuadratureRange = [minusInfty, 0];
 
-      const [result, info] = quadrature(g7k15, f, range);
+      const [result, info] = quadrature(g7k15, f, minusInfty, 0);
 
       expect(result).to.equal(0.5);
       expect(info.steps).to.equal(16);
@@ -51,9 +46,8 @@ describe('Gauss-Kronrod [G7, K15]', function () {
 
     it(`normal distribution [0, ${char.infty}) (16 steps, exact)`, function () {
       const f = normalDistribution;
-      const range: QuadratureRange = [0, infty];
 
-      const [result, info] = quadrature(g7k15, f, range);
+      const [result, info] = quadrature(g7k15, f, 0, infty);
 
       expect(result).to.equal(0.5);
       expect(info.steps).to.equal(16);
@@ -61,9 +55,8 @@ describe('Gauss-Kronrod [G7, K15]', function () {
 
     it(`x(e^(-x^2)) ${char.pm}${char.infty} (1 step, exact)`, function () {
       const f = (t: number) => t * Math.exp(-(t * t));
-      const range: QuadratureRange = [minusInfty, infty];
 
-      const [result, info] = quadrature(g7k15, f, range);
+      const [result, info] = quadrature(g7k15, f, minusInfty, infty);
 
       expect(result).to.equal(0);
       expect(info.steps).to.equal(1);
@@ -71,9 +64,8 @@ describe('Gauss-Kronrod [G7, K15]', function () {
 
     it(`e^t (-${char.infty}, 0] (14 steps, exact)`, function () {
       const f = (t: number) => Math.exp(t);
-      const range: QuadratureRange = [minusInfty, 0];
 
-      const [result, info] = quadrature(g7k15, f, range);
+      const [result, info] = quadrature(g7k15, f, minusInfty, 0);
 
       expect(result).to.equal(1);
       expect(info.steps).to.equal(14);
@@ -81,9 +73,8 @@ describe('Gauss-Kronrod [G7, K15]', function () {
 
     it(`t^-2 [1, ${char.infty}) (1 step, exact)`, function () {
       const f = (t: number) => 1 / (t * t);
-      const range: QuadratureRange = [1, infty];
 
-      const [result, info] = quadrature(g7k15, f, range);
+      const [result, info] = quadrature(g7k15, f, 1, infty);
 
       expect(result).to.equal(1);
       expect(info.steps).to.equal(1);

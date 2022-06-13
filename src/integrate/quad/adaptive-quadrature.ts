@@ -3,14 +3,12 @@ import type {
   IntegrationStep,
   QuadratureInfo,
   QuadratureOptions,
-  QuadratureRange,
-  QuadratureSettings,
-} from './integrate';
+} from '.';
 
 // Export the API.
 export { quadrature };
 
-const defaults: QuadratureSettings = {
+const defaults = {
   epsilon: Number.EPSILON * 16,
   maxDepth: Number.POSITIVE_INFINITY,
 };
@@ -65,14 +63,15 @@ const changeOfVariables = (
 const quadrature = (
   integrationStep: IntegrationStep,
   f: IntegrandCallback,
-  range: QuadratureRange,
+  a: number,
+  b: number,
   options: QuadratureOptions = {},
 ): [r: number, i: QuadratureInfo] => {
   // Establish settings.
   const settings = { ...defaults, ...options };
   const { epsilon, maxDepth } = settings;
-  const [a, b] = range;
-  let meta = { steps: 0 };
+
+  const info = { steps: 0, errorEstimate: 0, depth: 1 };
 
   // Allow for a change of variables to deal with infinite limits.
   const [_f, _a, _b] = changeOfVariables(f, a, b);
@@ -87,11 +86,10 @@ const quadrature = (
     1, // New depth.
     1, // Maximum depth.
     0, // Acceptable error per unit step.
-    { ...meta }, // Statistics.
+    { ...info }, // Statistics.
   );
 
   // Now calculate using the target global error.
-  meta = { steps: 0 };
   const acceptableUnitError = Math.abs((epsilon * result) / (_b - _a));
   [result, errorEstimate] = integrate_part(
     integrationStep,
@@ -101,10 +99,10 @@ const quadrature = (
     1, // New depth.
     maxDepth, // Maximum depth.
     acceptableUnitError, // Acceptable error per unit step.
-    meta, // Statistics.
+    info, // Statistics.
   );
 
-  return [result, { ...meta, errorEstimate }];
+  return [result, { ...info, errorEstimate }];
 };
 
 const integrate_part = (
@@ -152,12 +150,17 @@ const integrate_part = (
     return [currentEstimate, safeErrorEstimate];
   }
 
+  // Recurse deeper.
+  ++depth;
+  if (depth > info.depth) {
+    info.depth = depth;
+  }
   const leftResult = integrate_part(
     integrationStep,
     f, // Integrand.
     a, // Lower limit.
     mid, // Upper limit.
-    depth + 1, // New depth.
+    depth, // New depth.
     maxDepth, // Maximum depth.
     acceptableUnitError, // Acceptable error per unit step.
     info, // Statistics.
@@ -167,7 +170,7 @@ const integrate_part = (
     f, // Integrand.
     mid, // Lower limit.
     b, // Upper limit.
-    depth + 1, // New depth.
+    depth, // New depth.
     maxDepth, // Maximum depth.
     acceptableUnitError, // Acceptable error per unit step.
     info, // Statistics.
