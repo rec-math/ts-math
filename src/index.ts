@@ -1,3 +1,3 @@
-export const version = '1.0.0';
+export const version = '1.1.0';
 
-export * as quadrature from './quadrature/index.js';
+export * as integrate from './integrate/index.js';

@@ -1,4 +1,4 @@
-import { integrate } from '../../esm/quadrature/index.js';
+import { quad } from '../../esm/integrate/index.js';
 
 const { sqrt, PI, sin, exp } = Math;
 const negativeInfty = Number.NEGATIVE_INFINITY;
@@ -53,13 +53,13 @@ const report = (problem, method, heading) => {
   });
 };
 
-report(problems.normalDistribution, integrate, 'Gauss-Kronrod');
+report(problems.normalDistribution, quad, 'Gauss-Kronrod');
 
 // report(problems.expT, simpson, 'Simpson');
-report(problems.expT, integrate, 'Gauss-Kronrod');
+report(problems.expT, quad, 'Gauss-Kronrod');
 
 // report(problems.sinT, simpson, 'Simpson');
-report(problems.sinT, integrate, 'Gauss-Kronrod');
+report(problems.sinT, quad, 'Gauss-Kronrod');
 
 // report(problems.endDiscontinuity, simpson, 'Simpson');
-report(problems.endDiscontinuity, integrate, 'Gauss-Kronrod');
+report(problems.endDiscontinuity, quad, 'Gauss-Kronrod');

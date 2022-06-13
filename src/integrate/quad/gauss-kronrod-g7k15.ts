@@ -1,4 +1,4 @@
-import { IntegrandCallback, IntegrationStep } from './integrate';
+import type { IntegrandCallback, IntegrationStep } from '.';
 
 // Export the API.
 export { integrationStep };
