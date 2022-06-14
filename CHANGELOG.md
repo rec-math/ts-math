@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 - 2022-06-14
+
+### Fixed
+
+- [BREAKING]Typings now exported correctly, necessitating a change of file
+  structure in the module (`esm`) bundle.
+
 ## 1.1.0 - 2022-06-13
 
 ### Added

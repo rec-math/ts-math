@@ -3,7 +3,7 @@ import type {
   IntegrationStep,
   QuadratureInfo,
   QuadratureOptions,
-} from '.';
+} from '../quad';
 
 // Export the API.
 export { quadrature };

@@ -1,10 +1,9 @@
 {
   "name": "@rec-math/math",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Mathematics for the browser (and TypeScript, JavaScript).",
-  "main": "esm/index.js",
   "browser": "dist/rec-math.min.js",
-  "module": "esm",
+  "module": "esm/index.js",
   "type": "module",
   "sideEffects": false,
   "types": "types/index.d.ts",
@@ -16,7 +15,7 @@
   "scripts": {
     "build": "rimraf dist esm types && npm run lint && npm run build:esm && rollup -c && npm run test:dist",
     "build:esm": "tsc --project tsconfig.types.json && tsc --project tsconfig.build.json",
-    "ci:test": "npm run lint && npm run test:unit && npm run build",
+    "ci:build": "npm run lint && npm run test:unit && npm run build",
     "lint": "eslint . && prettier . --check",
     "lint:fix": "eslint . --fix && prettier . --write",
     "test": "npm run lint:fix && npm run test:unit && npm run test:func",
