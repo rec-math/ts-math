@@ -1,4 +1,4 @@
-import type { IntegrandCallback, IntegrationStep } from '.';
+import type { IntegrandCallback, IntegrationStep } from '../quad';
 
 // Export the API.
 export { integrationStep };
