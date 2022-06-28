@@ -1,6 +1,6 @@
 {
   "name": "@rec-math/math",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Mathematics for the browser (and TypeScript, JavaScript).",
   "browser": "dist/rec-math.min.js",
   "module": "esm/index.js",

@@ -31,6 +31,7 @@ export default [
         format: 'iife',
         banner,
         name: exposeName,
+        extend: true,
         file: pkg.browser,
         sourcemap: true,
       },

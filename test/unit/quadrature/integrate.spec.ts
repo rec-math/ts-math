@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { quad } from '../../../src/integrate/quad.js';
+import { quad } from '../../../src/numerical/quad/index.js';
 
 describe('Quadrature unit tests', function () {
   describe('integrate.quad()', function () {

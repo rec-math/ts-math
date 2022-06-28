@@ -1,4 +1,4 @@
-import { integrate } from '../../esm/quadrature/index.js';
+import { quad } from '../../esm/numerical.js';
 
 /**
 |:  z :|: pbuk GK(5,17)    :|: Ibix           :|
@@ -94,18 +94,18 @@ const output = (vals) => {
   console.log(vals);
 };
 
-const infty = Number.POSITIVE_INFINITY;
+const infty = Infinity;
 
 zvals.forEach((z) => {
   const s = 1 + z;
   // s = 1.001 + z  // Uncomment to replicate a systematic bug in Lightcone7
   const a = 1 / s;
-  const Tnow = integrate(THs, [s, infty])[0];
+  const Tnow = quad(THs, [s, infty])[0];
   const R = 1 / H(s);
-  const Dnow = Math.abs(integrate(TH, [1, s])[0]);
+  const Dnow = Math.abs(quad(TH, [1, s])[0]);
   const Dthen = Dnow / s;
-  const Dhor = integrate(TH, [0, s])[0] / s;
-  const Dpar = integrate(TH, [s, infty])[0] / s;
+  const Dhor = quad(TH, [0, s])[0] / s;
+  const Dpar = quad(TH, [s, infty])[0] / s;
   const Vgen = H(s) / (H0 * s);
   const Vnow = Dnow * H0;
   const Vthen = Dthen * H(s);

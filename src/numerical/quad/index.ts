@@ -1,5 +1,5 @@
-import { quadrature } from './quad/adaptive-quadrature.js';
-import { integrationStep } from './quad/gauss-kronrod-g7k15.js';
+import { quadrature } from './adaptive-quadrature.js';
+import { integrationStep } from './gauss-kronrod-g7k15.js';
 
 export type IntegrandCallback = (a: number) => number;
 

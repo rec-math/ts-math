@@ -23,9 +23,9 @@ import * as RecMath from '@rec-math/math';
 ### Numerical integration (quadrature)
 
 ```Javascript
-const [result, info] = RecMath.integrate.quad(
+const [result, info] = RecMath.numerical.quad(
   (x) => Math.exp(x), // A function to integrate.
-  [0, Number.POSITIVE_INFINITY] // A range to integrate over.
+  [0, Infinity] // A range to integrate over.
 );
 console log(result); // 1
 console log(info);
@@ -35,10 +35,10 @@ console log(info);
 The range can have intermediate points:
 
 ```Javascript
-const [, { points }] = RecMath.integrate.quad(
+const [, { points }] = RecMath.numerical.quad(
   // Normal distribution.
   (t) => Math.exp(-0.5 * t * t) / Math.sqrt(2 * Math.PI),
-  [Number.NEGATIVE_INFINITY, -3, -2, -1, 1, 2, 3, Number.POSITIVE_INFINITY]
+  [-Infinity, -3, -2, -1, 1, 2, 3, Infinity]
 );
 
 // 99.7%, 96% and 68% confidence intervals.

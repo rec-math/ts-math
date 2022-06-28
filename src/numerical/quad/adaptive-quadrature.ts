@@ -3,14 +3,14 @@ import type {
   IntegrationStep,
   QuadratureInfo,
   QuadratureOptions,
-} from '../quad';
+} from '.';
 
 // Export the API.
 export { quadrature };
 
 const defaults = {
   epsilon: Number.EPSILON * 16,
-  maxDepth: Number.POSITIVE_INFINITY,
+  maxDepth: Infinity,
 };
 
 /**
@@ -114,17 +114,15 @@ const integrate_part = (
   maxDepth: number, // Maximum depth.
   acceptableUnitError: number, // Acceptable error per unit step.
   info: QuadratureInfo, // Statistics.
-) => {
+): [a: number, b: number] => {
   // Initialize things.
-  const estimates = integrationStep(
+  const [currentEstimate, poorEstimate] = integrationStep(
     f, // Integrand.
     a, // Lower limit.
     b, // Upper limit.
   );
-  let currentEstimate = estimates[0];
-  const poorEstimate = estimates[1];
 
-  let errorEstimate = Math.abs(poorEstimate - currentEstimate);
+  const errorEstimate = Math.abs(poorEstimate - currentEstimate);
 
   if (depth >= maxDepth) {
     // Reached the maximum allowable depth so return the partial sum.
@@ -144,7 +142,7 @@ const integrate_part = (
     // We can't make this step any smaller: looks like a discontinuity.
     info.isUnreliable = true;
     const safeErrorEstimate = isNaN(errorEstimate) ? 0 : errorEstimate;
-    if (currentEstimate === Number.POSITIVE_INFINITY) {
+    if (isNaN(currentEstimate) || Math.abs(currentEstimate) === Infinity) {
       return [0, safeErrorEstimate];
     }
     return [currentEstimate, safeErrorEstimate];
@@ -155,7 +153,7 @@ const integrate_part = (
   if (depth > info.depth) {
     info.depth = depth;
   }
-  const leftResult = integrate_part(
+  const [leftEstimate, leftErrorEstimate] = integrate_part(
     integrationStep,
     f, // Integrand.
     a, // Lower limit.
@@ -165,7 +163,7 @@ const integrate_part = (
     acceptableUnitError, // Acceptable error per unit step.
     info, // Statistics.
   );
-  const rightResult = integrate_part(
+  const [rightEstimate, rightErrorEstimate] = integrate_part(
     integrationStep,
     f, // Integrand.
     mid, // Lower limit.
@@ -175,7 +173,5 @@ const integrate_part = (
     acceptableUnitError, // Acceptable error per unit step.
     info, // Statistics.
   );
-  currentEstimate = leftResult[0] + rightResult[0];
-  errorEstimate = leftResult[1] + rightResult[1];
-  return [currentEstimate, errorEstimate];
+  return [leftEstimate + rightEstimate, leftErrorEstimate + rightErrorEstimate];
 };

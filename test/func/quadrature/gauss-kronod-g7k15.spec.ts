@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 
-import { quadrature } from '../../../src/integrate/quad/adaptive-quadrature';
-import { integrationStep as g7k15 } from '../../../src/integrate/quad/gauss-kronrod-g7k15';
+import { quadrature } from '../../../src/numerical/quad/adaptive-quadrature';
+import { integrationStep as g7k15 } from '../../../src/numerical/quad/gauss-kronrod-g7k15';
 
 // const machineEps = Number.EPSILON;
-const infty = Number.POSITIVE_INFINITY;
-const minusInfty = Number.NEGATIVE_INFINITY;
+const infty = Infinity;
+const minusInfty = -infty;
 const char = {
   infty: '\u221e',
   pm: '\u00b1',
