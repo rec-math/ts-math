@@ -21,7 +21,22 @@ const banner = `/*! ${pkg.name} v${pkg.version} ${datetime}
  */
 `;
 
-export default [
+const modules = [
+  {
+    moduleName: 'numerical',
+    input: 'esm/numerical.js',
+    file: 'dist/rec-math-numerical.min.js',
+  },
+];
+
+const moduleOutput = {
+  format: 'iife',
+  name: exposeName,
+  extend: true,
+  sourcemap: true,
+};
+
+const builds = [
   // iife build for browser.
   {
     input,
@@ -40,3 +55,25 @@ export default [
     plugins: [terser()],
   },
 ];
+
+modules.forEach(({ moduleName, input, file }) => {
+  const banner = `/*! ${pkg.name}-${moduleName} v${pkg.version} ${datetime}
+ *  This file includes only the \`${moduleName}\` module of RecMath.
+ *  ${pkg.homepage}
+ *  Copyright ${pkg.author} ${pkg.license} license.
+ */
+`;
+  builds.push({
+    input,
+    output: [
+      {
+        ...moduleOutput,
+        file,
+        banner,
+      },
+    ],
+    plugins: [terser()],
+  });
+});
+
+export default builds;

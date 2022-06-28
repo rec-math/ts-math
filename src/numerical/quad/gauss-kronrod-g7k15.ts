@@ -1,7 +1,6 @@
-import type { IntegrandCallback, IntegrationStep } from '.';
+// rec-math/src/numerical/quad/gauss-kronrod-g7k15.ts
 
-// Export the API.
-export { integrationStep };
+import type { IntegrandCallback, IntegrationStep } from '.';
 
 // Gauss-Kronrod constants (G7, K15) on [-1, 1].
 // https://www.advanpix.com/2011/11/07/gauss-kronrod-quadrature-nodes-weights/
@@ -57,7 +56,7 @@ const weight_k7 = 0.022935322010529224;
  * @param b Upper limit.
  * @returns [current best estimate, poor estimate]
  */
-const integrationStep: IntegrationStep = (
+export const integrationStep: IntegrationStep = (
   f: IntegrandCallback, // Integrand.
   a: number, // Lower limit.
   b: number, // Upper limit.

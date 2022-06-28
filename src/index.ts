@@ -1,3 +1,5 @@
-export const version = '2.0.0';
+// rec-math/src/index.ts
 
-export * as numerical from './numerical.js';
+export { version } from './version.js';
+
+export * as numerical from './numerical/index.js';

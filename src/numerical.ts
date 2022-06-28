@@ -1,2 +1,5 @@
-// Export the default method.
-export { quad } from './numerical/quad/index.js';
+// rec-math/src/numerical.ts
+
+export { version } from './version.js';
+
+export * as numerical from './numerical/index.js';

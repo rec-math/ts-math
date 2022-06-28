@@ -1,4 +1,6 @@
-import { quadrature } from './adaptive-quadrature.js';
+// rec-math/src/numerical/quad/index.ts
+
+import { integrate } from './adaptive-quadrature.js';
 import { integrationStep } from './gauss-kronrod-g7k15.js';
 
 export type IntegrandCallback = (a: number) => number;
@@ -61,7 +63,7 @@ export const quad = (
   if (range.length === 2) {
     // Integrate over a single range.
     const [a, b] = range;
-    return quadrature(integrationStep, f, a, b, options);
+    return integrate(integrationStep, f, a, b, options);
   }
 
   if (range.length < 2) {
@@ -80,7 +82,7 @@ export const quad = (
   };
 
   for (let i = 0; i < range.length - 1; ++i) {
-    const single = quadrature(
+    const single = integrate(
       integrationStep,
       f,
       range[i],

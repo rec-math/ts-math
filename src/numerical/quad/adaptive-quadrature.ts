@@ -1,3 +1,5 @@
+// rec-math/src/numerical/quad/adaptive-quadrature.ts
+
 import type {
   IntegrandCallback,
   IntegrationStep,
@@ -5,11 +7,17 @@ import type {
   QuadratureOptions,
 } from '.';
 
-// Export the API.
-export { quadrature };
-
+/** Defaults for integration. */
 const defaults = {
+  /**
+   * Target error estimate for a step: if this is smaller it can lead to
+   * accumulation of roundoff errors.
+   */
   epsilon: Number.EPSILON * 16,
+  /**
+   * Maximum depth \\( d_{max} \\)for integration: the maximum number of steps
+   * can be \\( 2^{d_{max}} \\).
+   * */
   maxDepth: Infinity,
 };
 
@@ -17,7 +25,7 @@ const defaults = {
  * Perform a substitution with an appropriate change of variables to deal with
  * infinite ranges.
  *
- * @param f Intgrand callback.
+ * @param f Integrand callback.
  * @param a Lower limit.
  * @param b Upper limit.
  * @returns An array with any necessary substitution.
@@ -60,7 +68,7 @@ const changeOfVariables = (
   return [f, a, b];
 };
 
-const quadrature = (
+export const integrate = (
   integrationStep: IntegrationStep,
   f: IntegrandCallback,
   a: number,
