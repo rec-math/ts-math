@@ -10,15 +10,9 @@ const exposeName = 'RecMath';
 // Main entry point.
 const input = 'src/index.ts';
 
-// Modules entry points.
-const modules = [
-  {
-    moduleName: 'numerical',
-    input: 'src/numerical.ts',
-    file: 'dist/rec-math-numerical.min.js',
-    esmFile: 'esm/numerical.js',
-  },
-];
+// Submodules entry points.
+const submodules = ['numerical'];
+const buildEsmSubmodules = false;
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 
@@ -32,10 +26,15 @@ const banner = `/*! ${pkg.name} v${pkg.version} ${datetime}
  */
 `;
 
-const moduleOutput = {
+const iifeOutput = {
   format: 'iife',
   name: exposeName,
   extend: true,
+  sourcemap: true,
+};
+
+const esmOutput = {
+  format: 'esm',
   sourcemap: true,
 };
 
@@ -75,23 +74,40 @@ const builds = [
   },
 ];
 
-modules.forEach(({ moduleName, input, file }) => {
-  const banner = `/*! ${pkg.name}-${moduleName} v${pkg.version} ${datetime}
- *  This file includes only the \`${moduleName}\` module of RecMath.
+submodules.forEach((key) => {
+  const input = `src/${key}.ts`;
+
+  const banner = `/*! ${pkg.name}-${key} v${pkg.version} ${datetime}
+ *
+ *  This file includes only the RecMath.${key} module.
+ *
  *  ${pkg.homepage}
  *  Copyright ${pkg.author} ${pkg.license} license.
  */
 `;
+  // Add the iife build for browsers.
   builds.push({
     input,
-    output: [
-      {
-        ...moduleOutput,
-        file,
-        banner,
-      },
-    ],
+    output: {
+      ...iifeOutput,
+      file: `dist/rec-math-${key}.min.js`,
+      banner,
+    },
+
     plugins: [typescript(), terser()],
+  });
+
+  if (!buildEsmSubmodules) return;
+
+  // Add the ES Module build for bundlers and node.
+  builds.push({
+    input,
+    output: {
+      ...esmOutput,
+      file: `esm/${key}.js`,
+      banner,
+    },
+    plugins: [typescript()],
   });
 });
 

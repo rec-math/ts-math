@@ -1,4 +1,6 @@
-import { quad } from '../../esm/numerical.js';
+import { numerical } from '../../esm/index.js';
+
+const { quad } = numerical;
 
 const { sqrt, PI, sin, exp } = Math;
 const infty = Infinity;

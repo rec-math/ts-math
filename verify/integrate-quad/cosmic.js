@@ -1,4 +1,6 @@
-import { quad } from '../../esm/numerical.js';
+import { numerical } from '../../esm/index.js';
+
+const { quad } = numerical;
 
 /**
 |:  z :|: pbuk GK(5,17)    :|: Ibix           :|
