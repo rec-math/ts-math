@@ -2,12 +2,23 @@
 
 import { readFileSync } from 'fs';
 import { terser } from 'rollup-plugin-terser';
-
-// Source entry point.
-const input = 'esm/index.js';
+import typescript from '@rollup/plugin-typescript';
 
 // Global name for browser bundle.
 const exposeName = 'RecMath';
+
+// Main entry point.
+const input = 'src/index.ts';
+
+// Modules entry points.
+const modules = [
+  {
+    moduleName: 'numerical',
+    input: 'src/numerical.ts',
+    file: 'dist/rec-math-numerical.min.js',
+    esmFile: 'esm/numerical.js',
+  },
+];
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 
@@ -20,14 +31,6 @@ const banner = `/*! ${pkg.name} v${pkg.version} ${datetime}
  *  Copyright ${pkg.author} ${pkg.license} license.
  */
 `;
-
-const modules = [
-  {
-    moduleName: 'numerical',
-    input: 'esm/numerical.js',
-    file: 'dist/rec-math-numerical.min.js',
-  },
-];
 
 const moduleOutput = {
   format: 'iife',
@@ -52,7 +55,23 @@ const builds = [
       },
     ],
 
-    plugins: [terser()],
+    plugins: [typescript(), terser()],
+  },
+
+  // ES Module build for node and bundlers.
+  {
+    input,
+
+    output: [
+      {
+        format: 'es',
+        banner,
+        file: pkg.module,
+        sourcemap: true,
+      },
+    ],
+
+    plugins: [typescript()],
   },
 ];
 
@@ -72,7 +91,7 @@ modules.forEach(({ moduleName, input, file }) => {
         banner,
       },
     ],
-    plugins: [terser()],
+    plugins: [typescript(), terser()],
   });
 });
 
