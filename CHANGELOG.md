@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0 - 2022-06-29
+
+## Changed
+
+- [BREAKING]Refactored module names and output bundling - see README for
+  examples of new usage.
+
 ## 1.2.0 - 2022-06-14
 
 ### Fixed

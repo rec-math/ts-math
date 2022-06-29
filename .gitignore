@@ -7,3 +7,6 @@
 /esm/
 /types/
 /dist/
+
+# Generated documentation.
+/docs/

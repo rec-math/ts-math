@@ -1,4 +1,4 @@
-// rec-math/src/index.ts
+// rec-math/src/numerical.ts
 
 export { version } from './version.js';
 

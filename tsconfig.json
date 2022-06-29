@@ -1,7 +1,5 @@
 {
-  "include": ["test/**/*"],
   "compilerOptions": {
-    "noEmit": true,
     "target": "es2017",
     "module": "esnext",
     "moduleResolution": "node",
